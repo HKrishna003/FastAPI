@@ -1,9 +1,10 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env")
-    GEMINI_API_KEY: str = ""
-    LIVEKIT_API_KEY: str = ""
-    LIVEKIT_API_SECRET: str = ""
-    LIVEKIT_URL: str = ""
+    model_config = SettingsConfigDict(env_file=r"C:\Users\harik\Desktop\Study_Fastapi\FastAPI\.env")
+    DB_USER: str = ""
+    DB_PORT: str = ""
+    DB_NAME: str = ""
+    DB_PASS: str = ""
+    DB_HOST: str = ""
     
 settings = Settings()
