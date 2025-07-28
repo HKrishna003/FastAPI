@@ -3,3 +3,5 @@ uvicorn[standard]
 pydantic_settings
 SQLAlchemy
 pymysql
+sqlalchemy[asyncio] 
+aiomysql
