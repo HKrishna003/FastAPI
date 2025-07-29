@@ -6,5 +6,7 @@ class Settings(BaseSettings):
     DB_NAME: str = ""
     DB_PASS: str = ""
     DB_HOST: str = ""
+    JWT_SECRET_KEY: str = ""
+    JWT_ALGORITHM: str = ""
     
 settings = Settings()

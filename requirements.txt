@@ -5,3 +5,4 @@ SQLAlchemy
 pymysql
 sqlalchemy[asyncio] 
 aiomysql
+python-jose

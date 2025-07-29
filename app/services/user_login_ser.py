@@ -9,19 +9,19 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 
-async def user_check_db(user_data: User, db: AsyncSession):
+async def user_check_db(email: str, password: str, db: AsyncSession):
     try:
         # Query to check if user exists with provided credentials
         query = select(UserTable).where(
-            ((UserTable.username == user_data.username) | (UserTable.email == user_data.email)) & 
-            (UserTable.password == user_data.password)
+            (UserTable.email == email) & (UserTable.password == password)
         )
         
         result = await db.execute(query)
         user = result.scalar_one_or_none()
         
         if user:
-            logger.info(f"Login successful for user: {user_data.username}")
+            logger.info(f"Login successful for user: {user.username}")
+            logger.info("Login Succesfull")
             return {
                 "status": "Login Successful",
                 "user_id": user.id,
@@ -29,7 +29,7 @@ async def user_check_db(user_data: User, db: AsyncSession):
                 "email": user.email
             }
         else:
-            logger.warning(f"Login failed for user: {user_data.username}")
+            logger.warning(f"Login failed for user: {user.username}")
             return {
                 "status": "Login Failed",
                 "message": "Invalid username or password"
@@ -41,3 +41,4 @@ async def user_check_db(user_data: User, db: AsyncSession):
             "status": "Login Failed",
             "message": f"Error during login process: {str(e)}"
         }
+
