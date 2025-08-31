@@ -6,3 +6,5 @@ pymysql
 sqlalchemy[asyncio] 
 aiomysql
 python-jose
+cryptography
+langchain_google_genai

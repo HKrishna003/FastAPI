@@ -1,18 +1,19 @@
 from jose import jwt
 from datetime import datetime, timedelta
+from .config import Settings
 
-SECRET_KEY = "super-secret-key"
-ALGORITHM = "HS256"
+SECRET_KEY = Settings.JWT_SECRET
+ALGORITHM = Settings.JWT_ALGORITHM
 
+
+def create_access_token(data: dict):
 # Add custom payload
-payload = {
-    "sub": "123",                            # subject (user ID)
-    "username": "hari_krishna",             # custom field
-    "role": "admin",                        # custom field
-    "exp": datetime.utcnow() + timedelta(minutes=30)  # expiration
+    payload = {
+    "user_id": data.get("user_id", ""),                      # custom field
+    "exp": datetime.utcnow() + timedelta(minutes=1)  # expiration
 }
 
 # Encode JWT
-token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
-
-print(token)
+    token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+    return token
+    print(token)

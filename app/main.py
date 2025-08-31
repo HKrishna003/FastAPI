@@ -34,6 +34,7 @@ from sqlalchemy import text
 
 from app.routes import add_user_route
 from app.routes import user_login_route
+from app.routes import message_route
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -53,6 +54,7 @@ app = FastAPI(lifespan=lifespan)
 
 app.include_router(add_user_route.router)
 app.include_router(user_login_route.router)
+app.include_router(message_route.router)
 
 
 

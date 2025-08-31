@@ -5,7 +5,7 @@ from app.services.user_login_ser import user_check_db
 from app.core.db_session import get_db  
 import logging
 
-from app.core.config import Settings
+from app.core.config import settings
 
 from jose import jwt
 from datetime import datetime, timedelta
@@ -13,35 +13,26 @@ from datetime import datetime, timedelta
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
-settings = Settings()
-
 SECRET_KEY = settings.JWT_SECRET_KEY
 ALGORITHM = settings.JWT_ALGORITHM
 
 router = APIRouter(tags=["Login_user"])
 
 @router.post("/login")
-async def chek_user( email: str, password: str, db: AsyncSession = Depends(get_db) ):
+async def check_user(email: str, password: str, db: AsyncSession = Depends(get_db)):
     res = await user_check_db(email=email, password=password, db=db)
-    # print(res.type())
-    print("Res",res)
+    print("Res", res)
+    
     if res.get("status") == "Login Successful":
         payload = {
-            "user_id" : res.get("user_id",""),
-            "user_name" : res.get("username",""),
-            "email" : res.get("email",""),
+            "user_id": res.get("user_id", ""),
             "exp": datetime.utcnow() + timedelta(minutes=30)
         }
+        token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+        print("Token", token)
+        return {"status": res, "token": token}
     else:
-         payload = {
-            "user_id" : "",
-            "user_name" : "",
-            "email" : ""
-        }
-    token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
-    print("Token", token)
-    # print("Payload", payload)
-    return {"status": res}
+        return {"status": res, "token": None}
 
 
 

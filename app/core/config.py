@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=r"C:\Users\harik\Desktop\Study_Fastapi\FastAPI\.env")
     DB_USER: str = ""
@@ -8,5 +9,6 @@ class Settings(BaseSettings):
     DB_HOST: str = ""
     JWT_SECRET_KEY: str = ""
     JWT_ALGORITHM: str = ""
+    GOOGLE_API_KEY: str = ""
     
 settings = Settings()
